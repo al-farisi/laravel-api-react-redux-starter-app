@@ -17,13 +17,6 @@ const ModalConductor = props => {
 	case 'SIGN_UP':
 		return <SignUpModal {...props}/>;
 
-	case 'ADD_ADDRESS':
-		return <AddressModal />
-	case 'EDIT_ADDRESS':
-		return <AddressModal />
-	case 'DELETE_ADDRESS':
-		return <AddressModal />
-
 	default:
       return null;
   }

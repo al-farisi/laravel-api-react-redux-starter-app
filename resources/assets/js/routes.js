@@ -8,6 +8,8 @@ import createBrowserHistory from 'history/createBrowserHistory'
 import Layout from './layoutComponents/Layout';
 import Home from './pageComponents/Home';
 import Page2 from './pageComponents/Page2';
+import Account from './pageComponents/Account';
+
 
 //auth pages
 import requireAuth from './authComponents/common/requireAuth';
@@ -24,7 +26,7 @@ const Routes = () => {
 				<Route exact path="/" component={Home}/>
 				<Route path="/Page2" component={Page2}/>
 				
-				{/*<Route path="/Account" component={requireAuth(Account)} />*/}
+				<Route path="/Account" component={requireAuth(Account)} />
 			</Layout>
 		</Router>
 	)

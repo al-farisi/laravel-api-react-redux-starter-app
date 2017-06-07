@@ -7,7 +7,9 @@ class Page2 extends Component {
 	render() {
 		return (
 			<div styleName="Home">
-				Page 2
+				<div styleName="TextContainer">
+                    <h2>Just another page!!</h2>
+				</div>
 			</div>
 		);
 	}

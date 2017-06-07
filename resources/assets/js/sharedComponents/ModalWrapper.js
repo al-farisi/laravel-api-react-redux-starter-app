@@ -21,7 +21,7 @@ const ModalWrapper = props => {
 
   const okButton = props.showOk
     ? (
-      <button
+      <button styleName="ok-btn"
         onClick={onOk}
         disabled={props.okDisabled}
       >
@@ -30,7 +30,6 @@ const ModalWrapper = props => {
     ) : null;
 
 	const closeModal = () => {
-		// document.querySelector('body').classList.remove('modal-open');
 		props.setModal();
 	}
 
@@ -78,6 +77,7 @@ ModalWrapper.propTypes = {
   okDisabled: PropTypes.bool,
   width: PropTypes.number,
   style: PropTypes.object,
+	signIp: PropTypes.bool,
 
   // methods
   closeModal: PropTypes.func,
@@ -90,7 +90,8 @@ ModalWrapper.defaultProps = {
   okText: 'OK',
   okDisabled: false,
   width: 400,
-  onOk: () => {}
+  onOk: () => {},
+	signUp: false
 };
 
 export default connect(null, { setModal})(CSSModules(ModalWrapper, styles, {'allowMultiple' : true}));

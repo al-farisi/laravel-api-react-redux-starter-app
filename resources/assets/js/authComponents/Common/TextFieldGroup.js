@@ -7,6 +7,7 @@ const TextFieldGroup = ({field, value, placeholder, error, type, onChange}) => {
 
 	return (
 		<div>
+			<label>{field}</label>
 			<input
 				onChange={onChange}
 				value={value}

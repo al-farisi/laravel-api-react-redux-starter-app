@@ -44,6 +44,23 @@ export function login(data) {
 	}
 }
 
+export function register(data) {
+	return (dispatch) => {
+		return axios.post('api/register', data).then(res => {
+				const token = res.data.token;
+				localStorage.setItem('jwtToken', token);
+				setAuthorizationToken(token);
+				dispatch(loginSuccess(jwtDecode(token)));
+			}
+		)
+		.catch(err => {
+			throw(err);
+			// let w = window.open();
+			// w.document.html(err.response.data);
+		});
+	}
+}
+
 function removeAxiosDefaultToken() {
 	delete axios.defaults.headers.common['Authorization'];
 }

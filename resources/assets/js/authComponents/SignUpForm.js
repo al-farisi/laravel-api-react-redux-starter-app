@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { login } from './authActions';
+import { register } from './authActions';
 import { setModal } from '../sharedComponents/modalActions';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
@@ -9,15 +9,15 @@ import TextFieldGroup from './common/TextFieldGroup';
 
 import styles from './styles/formStyles.scss';
 
-class LoginForm extends Component {
+class SignUpForm extends Component {
 	constructor() {
 		super();
 		this.state = {
+            name: '',
 			email : '',
 			password : '',
 			errors : '',
 			isLoading : false,
-			provider : null,
 			user: null
 		};
 
@@ -29,8 +29,8 @@ class LoginForm extends Component {
 		return true;
 	}
 
-	signIn() {
-		this.props.login(this.state).then(
+	register() {
+		this.props.register(this.state).then(
 			(res) => {
 				this.props.setModal('');
 				this.context.router.history.push('/Account')
@@ -46,7 +46,7 @@ class LoginForm extends Component {
 		e.preventDefault();
 		if (this.isValid()) {
 			this.setState({errors: {}, isLoading: true});
-			this.signIn();
+			this.register();
 		} else {
 			//display errors
 		}
@@ -56,17 +56,20 @@ class LoginForm extends Component {
 		this.setState({ [e.target.name] : e.target.value})
 	}
 
-	transferToSignUp(e) {
-		e.preventDefault();
-		return false;
-	}
-
 	render() {
-		const { errors, email, password, isLoading } = this.state;
+		const { name, errors, email, password, isLoading } = this.state;
 
 		return (
 			<form styleName="modalForm" onSubmit={this.onSubmit}>
 				<TextFieldGroup
+					field="name"
+					placeholder="Name"
+					value={name}
+					error={errors.name}
+					onChange={this.onChange}
+					/>
+                
+                <TextFieldGroup
 					field="email"
 					placeholder="email"
 					value={email}
@@ -84,20 +87,20 @@ class LoginForm extends Component {
 					/>
 
 				<div>
-					<button disabled={isLoading}>Login</button>
+					<button disabled={isLoading}>Sign Up</button>
 				</div>
 			</form>
 		)
 	}
 }
 
-LoginForm.PropTypes = {
-	login: PropTypes.func.IsRequired
+SignUpForm.PropTypes = {
+	register: PropTypes.func.IsRequired
 }
 
-LoginForm.contextTypes = {
+SignUpForm.contextTypes = {
 	router: PropTypes.object.isRequired
 }
 
 
-export default connect(null, { login, setModal})(CSSModules(LoginForm, styles, {'allowMultiple' : true}));
+export default connect(null, { register, setModal})(CSSModules(SignUpForm, styles, {'allowMultiple' : true}));
