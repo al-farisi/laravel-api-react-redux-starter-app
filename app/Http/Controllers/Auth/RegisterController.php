@@ -1,14 +1,21 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+use JWTAuth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Dingo\Api\Routing\Helpers;
 
 class RegisterController extends Controller
 {
+    use Helpers;
+
+
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -45,13 +52,15 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator(Request $data)
     {
-        return Validator::make($data, [
+        $valid =  Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
+
+        return $valid;
     }
 
     /**
@@ -60,12 +69,22 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return User
      */
-    protected function create(array $data)
+    protected function create(Request $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        try {
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+            ]);
+
+            if (!$token = JWTAuth::fromUser($user)) {
+                return $this->response->error('Error creating token', 401);
+            }
+        } catch (Exception $e) {
+            return $this->response->error('Could not create user', 500);
+        }
+
+        return response()->json(compact('token'));
     }
 }
