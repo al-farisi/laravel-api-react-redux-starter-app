@@ -4,6 +4,21 @@
 
 // Variables
 @import "variables";
+@import "reset";
 
-// Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+*, *:before, *:after {
+	box-sizing: border-box
+}
+
+body {
+	font-family: $body-font;
+	background: $body-bg;
+}
+
+.content {
+	background: #01354A;
+	color: white;
+	font-size: 2em;
+	min-height: 100vh;
+	position: relative;
+}
