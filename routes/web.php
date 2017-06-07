@@ -11,6 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+/*
+* We only ever want to show the index page, except for api 
+* requests which will be ignored by the web router
+*/
+Route::get('{slug}', function () {
+    return view('index');
+})->where('slug', '(?!api)([A-z\d-\/_.]+)?');
