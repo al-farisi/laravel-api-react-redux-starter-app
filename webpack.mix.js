@@ -1,4 +1,5 @@
 const { mix } = require('laravel-mix');
+const path = require('path');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +12,31 @@ const { mix } = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix.react('resources/assets/js/index.jsx', 'public/js')
+   .sass('resources/assets/sass/app.scss', 'public/css')
+   .webpackConfig({
+	    module: {
+		    rules: [
+				{
+					test: /\.scss$/,
+					include: [
+						path.resolve(__dirname, "resources/assets/js/"),
+					],
+					loaders: [
+						'style-loader',
+				        'css-loader?sourceMap&modules=1&importLoaders=1&localIdentName=nlc_[hash:base64:5]',
+				        'resolve-url-loader',
+				        'sass-loader'
+					]
+				}
+		    ]
+		},
+		resolve: {
+			extensions: ['.scss'],
+		},
+   })
+   .browserSync({
+	   proxy: 'http://127.0.0.1:8000',
+   		files: ['public/**/*'],
+		   notify: false
+	});
