@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import CSSModules from 'react-css-modules';
 import PropTypes from 'prop-types';
 
-
 import styles from './styles/checkbox.scss';
-
 
 class Checkbox extends Component {
     constructor (props) {

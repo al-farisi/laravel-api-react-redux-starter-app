@@ -1,13 +1,20 @@
 import axios from 'axios';
-import {LOG_IN_SUCCESS} from './actionTypes';
-// import { gotAccountData } from '../accountComponents/accountActions';
+import {LOG_IN_SUCCESS, LOG_OUT_SUCCESS} from './actionTypes';
 import jwtDecode from 'jwt-decode';
+
 
 export function loginSuccess(user) {
 	return {
 		type: LOG_IN_SUCCESS,
 		user
 	};
+}
+
+export function logoutSuccess() {
+	return {
+		type: LOG_OUT_SUCCESS,
+		user: null
+	}
 }
 
 export function logout() {
@@ -17,8 +24,7 @@ export function logout() {
 				//delete access token from axios defaults
 				setAuthorizationToken(false);
 				//remove user from store
-				dispatch(loginSuccess({}));
-				// dispatch(gotAccountData({}));
+				dispatch(logoutSuccess());
 			}
 		)
 		.catch(err => {
@@ -55,22 +61,7 @@ export function register(data) {
 		)
 		.catch(err => {
 			throw(err);
-			// let w = window.open();
-			// w.document.html(err.response.data);
 		});
-	}
-}
-
-function removeAxiosDefaultToken() {
-	delete axios.defaults.headers.common['Authorization'];
-}
-
-export function setAuthorizationToken(token, refresh = false) {
-	if (token) {
-		refresh && removeAxiosDefaultToken();
-		axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-	} else {
-		removeAxiosDefaultToken();
 	}
 }
 
@@ -89,4 +80,17 @@ export function refreshAuthorizationToken(token, store) {
 	.catch(err => {
 		throw(err);
 	});
+}
+
+function removeAxiosDefaultToken() {
+	delete axios.defaults.headers.common['Authorization'];
+}
+
+export function setAuthorizationToken(token, refresh = false) {
+	if (token) {
+		refresh && removeAxiosDefaultToken();
+		axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+	} else {
+		removeAxiosDefaultToken();
+	}
 }

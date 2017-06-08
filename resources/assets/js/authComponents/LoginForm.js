@@ -68,6 +68,7 @@ class LoginForm extends Component {
 			<form styleName="modalForm" onSubmit={this.onSubmit}>
 				<TextFieldGroup
 					field="email"
+					type="email"
 					placeholder="email"
 					value={email}
 					error={errors.email}

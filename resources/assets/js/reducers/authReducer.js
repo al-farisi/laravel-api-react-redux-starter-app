@@ -1,5 +1,4 @@
-import {LOG_IN_SUCCESS} from '../authComponents/actionTypes';
-// import initialState from './initialState';
+import {LOG_IN_SUCCESS, LOG_OUT_SUCCESS} from '../authComponents/actionTypes';
 import { browserHistory } from 'react-router-dom';
 import { isEmpty } from 'underscore';
 
@@ -14,6 +13,11 @@ export default (state = initialState, action = {}) => {
 			return {
 				isAuthenticated: !isEmpty(action.user),
 				user: action.user
+			}
+		case LOG_OUT_SUCCESS:
+			return {
+				isAuthenticated: false,
+				user: null
 			}
 
 		default: return state;

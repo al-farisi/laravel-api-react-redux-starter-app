@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import { Provider,} from 'react-redux';
 import { loginSuccess,
 		 setAuthorizationToken,
-	  	 refreshAuthorizationToken } from './authComponents/authActions';
+	  	 refreshAuthorizationToken,
+         getRefreshToken } from './authComponents/authActions';
 import jwtDecode from 'jwt-decode';
 import Routes from './routes';
 
@@ -19,11 +20,9 @@ if (localStorage.jwtToken) {
 	const tokenExp = token.exp < Date.now() / 1000;
 	tokenExp && console.log('token expired');
 
-	if (tokenExp) {
+	tokenExp ?
 		refreshAuthorizationToken(localStorage.jwtToken, store)
-	} else {
-		setAuthorizationToken(localStorage.jwtToken);
-	}
+		: setAuthorizationToken(localStorage.jwtToken);
 
 	store.dispatch(loginSuccess(jwtDecode(localStorage.jwtToken)));
 }

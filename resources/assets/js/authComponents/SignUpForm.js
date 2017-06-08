@@ -72,6 +72,7 @@ class SignUpForm extends Component {
                 <TextFieldGroup
 					field="email"
 					placeholder="email"
+					type="email"
 					value={email}
 					error={errors.email}
 					onChange={this.onChange}
