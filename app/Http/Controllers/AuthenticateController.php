@@ -17,14 +17,6 @@ class AuthenticateController extends Controller
 {
     use Helpers;
 
-    public function register(Request $request) {
-        try {
-
-        } catch(Exception $e) {
-
-        }
-    }
-
     /**
      *  API Login, on success return JWT Auth token
      *
@@ -58,8 +50,9 @@ class AuthenticateController extends Controller
     public function logout(Request $request)
     {
         try {
-            $token = JWTAuth::getToken();        
-            JWTAuth::invalidate($request->input('token'));
+            if ($token = JWTAuth::getToken()) {
+                JWTAuth::invalidate($request->input('token'));
+            }
         } catch (JWTException $e) {
             return $this->response->errorInternal('Not able to invalidate Token');
         }
