@@ -36,7 +36,7 @@ class LoginForm extends Component {
 				this.context.router.history.push('/Account')
 			},
 			(err) => this.setState({
-				//  errors: err.response.data.errors,
+				 errors: err.response.data.message,
 				 isLoading: false
 			 })
 		);
@@ -87,6 +87,7 @@ class LoginForm extends Component {
 				<div>
 					<button disabled={isLoading}>Login</button>
 				</div>
+				<div><p>{this.state.errors}</p></div>
 			</form>
 		)
 	}
