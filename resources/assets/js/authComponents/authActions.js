@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {LOG_IN_SUCCESS, LOG_OUT_SUCCESS} from './actionTypes';
+import {LOG_IN_SUCCESS, LOG_OUT_SUCCESS, LOG_IN_FAILED} from './actionTypes';
 import jwtDecode from 'jwt-decode';
 
 
@@ -14,6 +14,13 @@ export function logoutSuccess() {
 	return {
 		type: LOG_OUT_SUCCESS,
 		user: null
+	}
+}
+
+export function loginFailed(error){
+	return {
+		type: LOG_IN_FAILED,
+		error
 	}
 }
 
@@ -43,9 +50,9 @@ export function login(data) {
 			}
 		)
 		.catch(err => {
+			console.log("error:" + err.response.data.message);
+			dispatch(loginFailed(err.response.data.message));
 			throw(err);
-			// let w = window.open();
-			// w.document.html(err.response.data);
 		});
 	}
 }

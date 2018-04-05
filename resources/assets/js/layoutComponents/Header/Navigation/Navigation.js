@@ -30,6 +30,7 @@ class Navigation extends Component {
 			<nav styleName="navLinks">
 				<li><NavLink to="/" activeClassName="active">Home</NavLink></li>
 				<li><NavLink to="/Page2" activeClassName="active">Page2</NavLink></li>
+				<li><NavLink to="/Product" activeClassName="active">Product</NavLink></li>
 				<li><NavLink to="/Account" activeClassName="active">Account</NavLink></li>
 				<li><a href="#" onClick={this.logout.bind(this)}>Log Out</a></li>
 			</nav>

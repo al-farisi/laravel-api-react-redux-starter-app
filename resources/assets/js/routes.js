@@ -9,6 +9,7 @@ import Layout from './layoutComponents/Layout';
 import Home from './pageComponents/Home';
 import Page2 from './pageComponents/Page2';
 import Account from './pageComponents/Account';
+import Product from './pageComponents/Product';
 
 
 //auth pages
@@ -27,6 +28,7 @@ const Routes = () => {
 				<Route path="/Page2" component={Page2}/>
 				
 				<Route path="/Account" component={requireAuth(Account)} />
+				<Route path="/Product" component={requireAuth(Product)} />
 			</Layout>
 		</Router>
 	)
